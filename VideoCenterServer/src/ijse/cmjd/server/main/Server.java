@@ -21,7 +21,7 @@ public class Server {
         if(!serverStart){
             try {
                 Registry registry = LocateRegistry.createRegistry(5050);
-                registry.rebind("VCServer", new RemoteFactoryImpl());
+                registry.rebind("BOBShop", new RemoteFactoryImpl());
                 serverStart = true;
                 System.out.println("Server started//");
             } catch (Exception e) {

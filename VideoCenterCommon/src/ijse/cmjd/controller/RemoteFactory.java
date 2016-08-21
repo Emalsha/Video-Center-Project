@@ -18,4 +18,5 @@ public interface RemoteFactory extends Remote{
      public ItemController getItemController() throws RemoteException, IOException, ClassNotFoundException;
      public PaymentController getPaymentController() throws RemoteException, IOException, ClassNotFoundException;
      public RentController getRentController() throws RemoteException, IOException, ClassNotFoundException;
+     public LoginController getLoginController() throws RemoteException,IOException,ClassNotFoundException;
 }

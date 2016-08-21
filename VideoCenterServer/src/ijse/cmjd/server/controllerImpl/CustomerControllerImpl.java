@@ -8,10 +8,13 @@ package ijse.cmjd.server.controllerImpl;
 import ijse.cmjd.controller.CustomerController;
 import ijse.cmjd.model.Customer;
 import ijse.cmjd.server.fileaccess.CustomerFileAccess;
+import ijse.cmjd.server.observerble.CustomerObserverble;
 import java.rmi.*;
 import java.io.*;
 import java.util.*;
 import java.rmi.server.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,8 +23,11 @@ import java.rmi.server.*;
 public class CustomerControllerImpl extends UnicastRemoteObject implements CustomerController{
 
     private final CustomerFileAccess customerFileAccess;
+    private final CustomerObserverble customerObservable;
+    
     
     public CustomerControllerImpl() throws RemoteException{
+        this.customerObservable = new CustomerObserverble();
         this.customerFileAccess = new CustomerFileAccess();
     
     }
@@ -36,9 +42,9 @@ public class CustomerControllerImpl extends UnicastRemoteObject implements Custo
                     @Override
                     public void run(){
                         try{
-                            
+                            customerObservable.notifyAllObservers("New customer added...");
                         }catch(RemoteException ex){
-                            
+                            Logger.getLogger(CustomerControllerImpl.class.getName()).log(Level.SEVERE,null,ex);
                         }
                     }
                 }.start();

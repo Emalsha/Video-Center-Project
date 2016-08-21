@@ -7,6 +7,7 @@ package ijse.cmjd.server.controllerImpl;
 
 import ijse.cmjd.controller.CustomerController;
 import ijse.cmjd.controller.ItemController;
+import ijse.cmjd.controller.LoginController;
 import ijse.cmjd.controller.PaymentController;
 import ijse.cmjd.controller.RemoteFactory;
 import ijse.cmjd.controller.RentController;
@@ -41,5 +42,12 @@ public class RemoteFactoryImpl extends UnicastRemoteObject implements RemoteFact
     public RentController getRentController() throws RemoteException, IOException, ClassNotFoundException {
         return new RentControllerImpl();
     }
+
+    @Override
+    public LoginController getLoginController() throws RemoteException, IOException, ClassNotFoundException {
+        return new LoginControllerImpl();
+    }
+    
+    
     
 }
