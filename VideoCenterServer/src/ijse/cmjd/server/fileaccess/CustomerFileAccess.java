@@ -47,7 +47,7 @@ public class CustomerFileAccess {
                 data += customer.getCus_name() + "$";
                 data += customer.getCus_address() + "$";
                 data += customer.getCus_mobile() + "$";
-                data += customer.getCus_nic() + "$";
+                data += customer.getCus_nic() + "$ \n";
                 
                 fileWriter = new FileWriter(file,true);
                 bufferedWriter = new BufferedWriter(fileWriter);
@@ -100,6 +100,92 @@ public class CustomerFileAccess {
         }else{
             return null;
         }
+    }
+    
+    public Customer searchCustomerNIC(String nic) throws IOException,ClassNotFoundException,RemoteException{
+        
+        if(file.exists()){
+            
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
+            String line = bufferedReader.readLine();
+            StringTokenizer stringTokenizer = new StringTokenizer(line,"$");
+            String ar[] = new String[stringTokenizer.countTokens()];
+            for(int i=0;i<ar.length;i++){
+                if(stringTokenizer.hasMoreTokens()){
+                    ar[i] = stringTokenizer.nextToken();
+                }
+            }
+            bufferedReader.close();
+            Customer customer = null;
+            
+            for(int i=0;i<ar.length;i += 5){
+                if(nic.equals(ar[i+4])){
+                    customer = new Customer();
+                    customer.setCus_id(ar[i]);
+                    customer.setCus_name(ar[i+1]);
+                    customer.setCus_address(ar[i+2]);
+                    customer.setCus_mobile(ar[i+3]);
+                    customer.setCus_nic(ar[i+4]);
+                    break;
+                }
+            }
+            
+            return customer;
+            
+        }else{
+            return null;
+        }
+    }
+    
+    public boolean updateCustomer(Customer customer) throws RemoteException,IOException,ClassNotFoundException{
+        
+        try{
+            
+            lock.writeLock().lock();
+            bufferedWriter = null;
+            fileWriter = null;
+            
+            if(file.exists()){
+                fileReader = new FileReader(file);
+                bufferedReader = new BufferedReader(fileReader);
+                String line = bufferedReader.readLine();
+                StringTokenizer stringTokenizer = new StringTokenizer(line,"$");
+                String ar[] = new String[stringTokenizer.countTokens()];
+                for(int i = 0; i<ar.length;i++){
+                    if(stringTokenizer.hasMoreTokens()){
+                        ar[i] = stringTokenizer.nextToken();
+                    }
+                }
+                
+                bufferedReader.close();
+                for(int i = 0;i<ar.length; i += 5){
+                    if (customer.getCus_id().equals(ar[i])) {
+                        ar[i+1] = customer.getCus_name();
+                        ar[i+2] = customer.getCus_address();
+                        ar[i+3] = customer.getCus_mobile();
+                        ar[i+4] = customer.getCus_nic();
+                        
+                        break;
+                    }
+                }
+                fileWriter = new FileWriter(file);
+                for(String data : ar){
+                    fileWriter.append(data + "$");
+                }
+                fileWriter.flush();
+                fileWriter.close();
+                
+                return true;
+                
+            }else{
+                return false;
+            }
+            
+        }finally{
+            lock.writeLock().unlock();
+        }
+        
     }
     
     
