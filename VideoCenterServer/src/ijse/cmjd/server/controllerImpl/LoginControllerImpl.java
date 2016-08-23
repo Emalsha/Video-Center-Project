@@ -11,7 +11,6 @@ import ijse.cmjd.server.fileaccess.LoginFileAccess;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,7 +27,6 @@ public class LoginControllerImpl extends UnicastRemoteObject implements LoginCon
     @Override
     public boolean searchLogin(Login login) throws RemoteException, IOException, ClassNotFoundException {
         boolean isUser = fileAccess.searchLogin(login);
-        
         return isUser;
     }
     
