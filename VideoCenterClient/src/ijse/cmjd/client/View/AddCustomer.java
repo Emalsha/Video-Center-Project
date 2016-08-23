@@ -63,6 +63,11 @@ public class AddCustomer extends javax.swing.JDialog {
         btn_save.setText("Save ");
 
         btn_cancel.setText("Cancel");
+        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -147,6 +152,10 @@ public class AddCustomer extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_cancelActionPerformed
 
     /**
      * @param args the command line arguments
