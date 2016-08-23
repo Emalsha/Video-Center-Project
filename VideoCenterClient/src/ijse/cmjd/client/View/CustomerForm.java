@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,12 +25,16 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class CustomerForm extends javax.swing.JFrame {
 
+    DefaultTableModel dtm;
+    
     /**
      * Creates new form CustomerForm
      */
     public CustomerForm() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        dtm = (DefaultTableModel)tbl_customer.getModel();
     }
 
     /**
@@ -167,6 +172,7 @@ public class CustomerForm extends javax.swing.JFrame {
         new AddCustomer(this, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    @SuppressWarnings("empty-statement")
     private void btn_search_cusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_search_cusActionPerformed
         try {
             Customer customer = ServerConnector.getServerConnector().getCustomerController().searchCustomer(txt_search_cus.getText());
@@ -176,7 +182,14 @@ public class CustomerForm extends javax.swing.JFrame {
             }
             
             if (customer != null) {
-                JOptionPane.showMessageDialog(this, "Found some thing");
+                dtm.setRowCount(0);
+                String[] ar = {customer.getCus_id(),
+                        customer.getCus_name(),
+                        customer.getCus_nic(),
+                        customer.getCus_mobile(),
+                        customer.getCus_address()};
+                dtm.addRow(ar);
+                
             }else{
                 JOptionPane.showMessageDialog(this, "No Match found.");
             }
