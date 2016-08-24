@@ -47,7 +47,7 @@ public class CustomerFileAccess {
                 data += customer.getCus_name() + "$";
                 data += customer.getCus_address() + "$";
                 data += customer.getCus_mobile() + "$";
-                data += customer.getCus_nic() + "$ \n";
+                data += customer.getCus_nic() + "$";
                 
                 fileWriter = new FileWriter(file,true);
                 bufferedWriter = new BufferedWriter(fileWriter);
@@ -145,6 +145,7 @@ public class CustomerFileAccess {
             lock.writeLock().lock();
             bufferedWriter = null;
             fileWriter = null;
+            fileReader = null;
             
             if(file.exists()){
                 fileReader = new FileReader(file);

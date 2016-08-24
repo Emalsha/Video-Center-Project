@@ -26,6 +26,8 @@ public class AddCustomer extends javax.swing.JDialog {
 
     /**
      * Creates new form AddCustomer
+     * @param parent
+     * @param modal
      */
     public AddCustomer(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

@@ -5,6 +5,7 @@
  */
 package ijse.cmjd.client.main;
 
+import ijse.cmjd.controller.CustomerController;
 import ijse.cmjd.controller.LoginController;
 import ijse.cmjd.controller.RemoteFactory;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class ServerConnector{
     private final RemoteFactory remoteFactory;
     
     private LoginController loginController;
+    private CustomerController customerController;
     
     private ServerConnector() throws NotBoundException,MalformedURLException,RemoteException{
         remoteFactory = (RemoteFactory)Naming.lookup("rmi://localhost:5050/BOBShop");
@@ -40,5 +42,12 @@ public class ServerConnector{
             loginController = remoteFactory.getLoginController();
         }
         return loginController;
+    }
+    
+    public CustomerController getCustomerController() throws RemoteException,IOException,ClassNotFoundException{
+        if(customerController == null){
+            customerController = remoteFactory.getCustomerController();
+        }
+        return customerController;
     }
 }

@@ -86,12 +86,22 @@ public class CustomerForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_customer);
 
         jButton2.setText("Update Details");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Remove Details");
 
         jLabel1.setText("Search Customer :");
 
         txt_search_cus.setToolTipText("Please use customer ID or NIC ");
+        txt_search_cus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_search_cusActionPerformed(evt);
+            }
+        });
 
         btn_search_cus.setText("Search");
         btn_search_cus.addActionListener(new java.awt.event.ActionListener() {
@@ -200,6 +210,40 @@ public class CustomerForm extends javax.swing.JFrame {
             Logger.getLogger(CustomerForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_search_cusActionPerformed
+
+    private void txt_search_cusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_search_cusActionPerformed
+        try {
+            Customer customer = ServerConnector.getServerConnector().getCustomerController().searchCustomer(txt_search_cus.getText());
+            
+            if (customer == null) {
+                customer = ServerConnector.getServerConnector().getCustomerController().searchCustomerNIC(txt_search_cus.getText());
+            }
+            
+            if (customer != null) {
+                dtm.setRowCount(0);
+                String[] ar = {customer.getCus_id(),
+                        customer.getCus_name(),
+                        customer.getCus_nic(),
+                        customer.getCus_mobile(),
+                        customer.getCus_address()};
+                dtm.addRow(ar);
+                
+            }else{
+                JOptionPane.showMessageDialog(this, "No Match found.");
+            }
+            
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
+            Logger.getLogger(CustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(CustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txt_search_cusActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        new UpdateCustomer(this, rootPaneCheckingEnabled).setVisible(true);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

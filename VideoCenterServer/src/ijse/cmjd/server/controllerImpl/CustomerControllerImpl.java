@@ -58,12 +58,12 @@ public class CustomerControllerImpl extends UnicastRemoteObject implements Custo
 
     @Override
     public Customer searchCustomer(String id) throws RemoteException, ClassNotFoundException, IOException {
-        return new Customer();
+        return customerFileAccess.searchCustomer(id);
     }
 
     @Override
     public boolean updateCustomer(Customer customer) throws RemoteException, ClassNotFoundException, IOException {
-        return true;
+        return customerFileAccess.updateCustomer(customer);
     }
 
     @Override
@@ -74,6 +74,11 @@ public class CustomerControllerImpl extends UnicastRemoteObject implements Custo
     @Override
     public ArrayList<Customer> getAllCustomer() throws RemoteException, ClassNotFoundException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Customer searchCustomerNIC(String nic) throws RemoteException, ClassNotFoundException, IOException {
+        return customerFileAccess.searchCustomerNIC(nic);
     }
     
 }

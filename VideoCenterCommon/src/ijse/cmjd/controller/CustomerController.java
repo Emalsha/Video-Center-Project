@@ -19,6 +19,8 @@ public interface CustomerController extends Remote{
     public boolean addCustomer(Customer customer) throws RemoteException,ClassNotFoundException,IOException;
     
     public Customer searchCustomer(String id) throws RemoteException,ClassNotFoundException,IOException;
+  
+    public Customer searchCustomerNIC(String nic) throws RemoteException,ClassNotFoundException,IOException;
     
     public boolean updateCustomer(Customer customer) throws RemoteException,ClassNotFoundException,IOException;
     
